@@ -5,8 +5,7 @@ public class UserTO {
 	private long id;
 	private String firstName;
 	private String lastName;
-	private long points;
-	private int level;
+	private StatisticTO statistic;
 
 	public long getId() {
 		return id;
@@ -32,20 +31,12 @@ public class UserTO {
 		this.lastName = lastName;
 	}
 
-	public long getPoints() {
-		return points;
+	public StatisticTO getStatistic() {
+		return statistic;
 	}
 
-	public void setPoints(long points) {
-		this.points = points;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
+	public void setStatistic(StatisticTO statistic) {
+		this.statistic = statistic;
 	}
 
 }

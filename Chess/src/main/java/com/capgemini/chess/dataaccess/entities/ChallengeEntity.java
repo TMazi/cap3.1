@@ -2,21 +2,17 @@ package com.capgemini.chess.dataaccess.entities;
 
 import javax.persistence.Entity;
 
-import com.capgemini.chess.enums.Status;
-
 @Entity
 public class ChallengeEntity {
 
 	private long id;
 	private long challengingPlayerId;
 	private long opponentPlayerId;
-	private Status status;
 
-	public ChallengeEntity(long id, long challengingPlayerId, long opponentPlayerId, Status status) {
+	public ChallengeEntity(long id, long challengingPlayerId, long opponentPlayerId) {
 		this.id = id;
 		this.challengingPlayerId = challengingPlayerId;
 		this.opponentPlayerId = opponentPlayerId;
-		this.status = status;
 	}
 
 	public long getOpponentPlayerId() {
@@ -41,14 +37,6 @@ public class ChallengeEntity {
 
 	public void setChallengingPlayerId(long challengingPlayerId) {
 		this.challengingPlayerId = challengingPlayerId;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
 	}
 
 }

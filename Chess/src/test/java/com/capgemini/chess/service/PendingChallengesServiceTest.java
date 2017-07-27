@@ -16,7 +16,6 @@ import com.capgemini.chess.dao.ChallengeDao;
 import com.capgemini.chess.dao.UserDao;
 import com.capgemini.chess.service.impl.GetPendingChallengesServiceImpl;
 import com.capgemini.chess.service.to.ChallengeTO;
-import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,7 +34,7 @@ public class PendingChallengesServiceTest {
 		UserTO user = new UserTO();
 		user.setId(1L);
 		List<Long> ids = generateIds();
-		List<OpponentTO> pendingOpponents = generatePlayers();
+		List<UserTO> pendingOpponents = generatePlayers();
 		when(challengers.getIDsOfPlayersChallengingThisPlayer(user.getId())).thenReturn(ids);
 		when(potential.getOpponentsByIDs(Matchers.anyListOf(Long.class))).thenReturn(pendingOpponents);
 		GetPendingChallengesService service = new GetPendingChallengesServiceImpl(challengers, potential);
@@ -56,11 +55,11 @@ public class PendingChallengesServiceTest {
 		return ids;
 	}
 
-	private List<OpponentTO> generatePlayers() {
-		List<OpponentTO> opponents = new ArrayList<>();
-		OpponentTO first = new OpponentTO();
-		OpponentTO second = new OpponentTO();
-		OpponentTO third = new OpponentTO();
+	private List<UserTO> generatePlayers() {
+		List<UserTO> opponents = new ArrayList<>();
+		UserTO first = new UserTO();
+		UserTO second = new UserTO();
+		UserTO third = new UserTO();
 		first.setId(5L);
 		second.setId(2L);
 		third.setId(6L);

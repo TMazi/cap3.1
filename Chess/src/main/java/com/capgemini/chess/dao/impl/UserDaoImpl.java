@@ -1,53 +1,43 @@
 package com.capgemini.chess.dao.impl;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.chess.dao.UserDao;
-import com.capgemini.chess.dataaccess.entities.PlayerStatisticsEntity;
-import com.capgemini.chess.dataaccess.entities.UserEntity;
+import com.capgemini.chess.data.Users;
 import com.capgemini.chess.mapper.UserMapper;
-import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.StatisticTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	Set<UserEntity> players = new HashSet<UserEntity>();
-
-	public UserDaoImpl() {
-		initUsers();
-	}
-
 	@Override
-	public List<OpponentTO> findFivePotentialOpponents(int minLevel, int maxLevel, List<Long> impossiblePlayers) {
+	public List<UserTO> findFivePotentialOpponents(int minLevel, int maxLevel, List<Long> impossiblePlayers) {
 
-		return players.stream()
+		return Users.getUsers().stream()
 				.filter(user -> user.getStatistics().getLevel() > maxLevel
 						&& user.getStatistics().getLevel() < minLevel)
 				.filter(user -> !impossiblePlayers.contains(user.getId()))
-				.map(user -> UserMapper.opponentMapper(user))
+				.map(user -> UserMapper.userMapper(user))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<OpponentTO> getOpponentsByIDs(List<Long> ids) {
+	public List<UserTO> getOpponentsByIDs(List<Long> ids) {
 
-		return players.stream()
+		return Users.getUsers().stream()
 				.filter(player -> ids.contains(player.getId()))
-				.map(c -> UserMapper.opponentMapper(c))
+				.map(c -> UserMapper.userMapper(c))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public UserTO findPlayerById(long playerId) {
-		return players.stream()
+		return Users.getUsers().stream()
 				.filter(p -> p.getId() == playerId)
 				.findFirst()
 				.map(user -> UserMapper.userMapper(user))
@@ -56,24 +46,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public StatisticTO getUserStatistic(long playerId) {
-		return players.stream()
+		return Users.getUsers().stream()
 				.filter(p -> p.getId() == playerId).findFirst()
 				.map(p -> UserMapper.statisticsMapper(p))
 				.orElse(null);
 	}
-
-	private void initUsers() {
-		players.add(new UserEntity(1L, "John", "Wolf", new PlayerStatisticsEntity(getNextId(), 20, 5, 10, 5, 200, 1)));
-		players.add(new UserEntity(2L, "Michy", "Kaboul", new PlayerStatisticsEntity(getNextId(), 100, 50, 30, 20, 1000, 3)));
-		players.add(new UserEntity(3L, "Adam", "Johnson", new PlayerStatisticsEntity(getNextId(), 500, 450, 16, 34, 3000, 5)));
-		players.add(new UserEntity(4L, "Alice", "Cooper", new PlayerStatisticsEntity(getNextId(), 11, 3, 8, 0, 15, 1)));
-		players.add(new UserEntity(5L, "Brian", "Ham", new PlayerStatisticsEntity(getNextId(), 73, 28, 41, 4, 125, 1)));
-		players.add(new UserEntity(6L, "Lidia", "Kaput", new PlayerStatisticsEntity(getNextId(), 125, 83, 37, 5, 1764, 4)));
-
-	}
 	
 	private long getNextId() {
-		return players.stream().map(player -> player.getId()).max(Comparator.comparing(l -> l)).orElse(0L) + 1L;
+		return Users.getUsers().stream().map(player -> player.getId()).max(Comparator.comparing(l -> l)).orElse(0L) + 1L;
 	}
 
 }

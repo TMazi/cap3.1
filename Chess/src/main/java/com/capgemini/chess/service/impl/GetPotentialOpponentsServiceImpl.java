@@ -11,7 +11,6 @@ import com.capgemini.chess.dao.UserDao;
 import com.capgemini.chess.mapper.ChallengeMapper;
 import com.capgemini.chess.service.GetPotentialOpponentsService;
 import com.capgemini.chess.service.to.ChallengeTO;
-import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @Service
@@ -29,7 +28,7 @@ public class GetPotentialOpponentsServiceImpl implements GetPotentialOpponentsSe
 	@Override
 	public List<ChallengeTO> getPotentialOpponents(UserTO user) {
 
-		int playerLevel = user.getLevel();
+		int playerLevel = user.getStatistic().getLevel();
 		int maxLevel = playerLevel + 2;
 		int minLevel;
 
@@ -40,7 +39,7 @@ public class GetPotentialOpponentsServiceImpl implements GetPotentialOpponentsSe
 
 		List<Long> playersAlreadyInChallenge = challenges.getIDsOfPlayersInChallenge(user.getId());
 		playersAlreadyInChallenge.add(user.getId());
-		List<OpponentTO> opponents = users.findFivePotentialOpponents(minLevel, maxLevel, playersAlreadyInChallenge);
+		List<UserTO> opponents = users.findFivePotentialOpponents(minLevel, maxLevel, playersAlreadyInChallenge);
 
 		List<ChallengeTO> challenges = opponents.stream()
 				.map(opp -> ChallengeMapper.challengeMapper(opp))

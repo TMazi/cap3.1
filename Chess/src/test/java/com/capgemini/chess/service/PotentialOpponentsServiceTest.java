@@ -8,12 +8,14 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.capgemini.chess.dao.ChallengedPlayersDao;
-import com.capgemini.chess.dao.PotentialOpponentDao;
+import com.capgemini.chess.dao.ChallengeDao;
+import com.capgemini.chess.dao.UserDao;
 import com.capgemini.chess.service.impl.PotentialOpponentsServiceImpl;
+import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
 
@@ -21,10 +23,10 @@ import com.capgemini.chess.service.to.UserTO;
 public class PotentialOpponentsServiceTest {
 
 	@Mock
-	PotentialOpponentDao opponentsDao;
+	UserDao opponentsDao;
 
 	@Mock
-	ChallengedPlayersDao challengedDao;
+	ChallengeDao challengedDao;
 
 	@Test
 	public void shouldReturnListOfOpponents() {
@@ -34,18 +36,17 @@ public class PotentialOpponentsServiceTest {
 		List<OpponentTO> opponents = createSomeOpponents();
 		List<Long> alreadyChallenged = new ArrayList<>();
 		alreadyChallenged.add(2L);
-		when(opponentsDao.findPotentialOpponents(1, 4)).thenReturn(opponents);
-		when(challengedDao.getIDsOfChallengedPlayers(1L)).thenReturn(alreadyChallenged);
+		when(challengedDao.getIDsOfPlayersInChallenge(1L)).thenReturn(alreadyChallenged);
+		when(opponentsDao.findFivePotentialOpponents(1, 4, Matchers.anyListOf(Long.class))).thenReturn(opponents);
 		UserTO user = new UserTO();
 		user.setId(1);
 		user.setLevel(2);
 
 		// when
-		List<OpponentTO> result = service.getPotentialOpponents(user);
+		List<ChallengeTO> result = service.getPotentialOpponents(user);
 
 		// then
 		assertEquals(3, result.size());
-		assertEquals(1, result.get(1).getLevel());
 
 	}
 

@@ -6,27 +6,28 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.chess.dao.ChallengedPlayersDao;
-import com.capgemini.chess.dao.PotentialOpponentDao;
+import com.capgemini.chess.dao.ChallengeDao;
+import com.capgemini.chess.dao.UserDao;
+import com.capgemini.chess.mapper.ChallengeMapper;
 import com.capgemini.chess.service.PotentialOpponentsService;
+import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @Service
 public class PotentialOpponentsServiceImpl implements PotentialOpponentsService {
 
-	PotentialOpponentDao potentialOpponents = null;
-	ChallengedPlayersDao challengedPlayers = null;
+	UserDao users = null;
+	ChallengeDao challenges = null;
 
 	@Autowired
-	public PotentialOpponentsServiceImpl(PotentialOpponentDao potentialOpponents,
-			ChallengedPlayersDao challengedPlayers) {
-		this.potentialOpponents = potentialOpponents;
-		this.challengedPlayers = challengedPlayers;
+	public PotentialOpponentsServiceImpl(UserDao users, ChallengeDao challenges) {
+		this.users = users;
+		this.challenges = challenges;
 	}
 
 	@Override
-	public List<OpponentTO> getPotentialOpponents(UserTO user) {
+	public List<ChallengeTO> getPotentialOpponents(UserTO user) {
 
 		int playerLevel = user.getLevel();
 		int maxLevel = playerLevel + 2;
@@ -37,13 +38,17 @@ public class PotentialOpponentsServiceImpl implements PotentialOpponentsService 
 		} else
 			minLevel = playerLevel - 2;
 
-		List<OpponentTO> opponents = potentialOpponents.findPotentialOpponents(minLevel, maxLevel);
-		List<Long> alreadyChallengedPlayersIds = challengedPlayers.getIDsOfChallengedPlayers(user.getId());
+		List<Long> playersAlreadyInChallenge = challenges.getIDsOfPlayersInChallenge(user.getId());
+		playersAlreadyInChallenge.add(user.getId());
+		List<OpponentTO> opponents = users.findFivePotentialOpponents(minLevel, maxLevel, playersAlreadyInChallenge);
 
-		return opponents.stream()
-				.filter(u -> !alreadyChallengedPlayersIds.contains(u.getId()))
-				.limit(5)
+		List<ChallengeTO> challenges = opponents.stream()
+				.map(opp -> ChallengeMapper.challengeMapper(opp))
 				.collect(Collectors.toList());
+
+		challenges.forEach(chall -> chall.setOpponentPlayerId(user.getId()));
+
+		return challenges;
 
 	}
 

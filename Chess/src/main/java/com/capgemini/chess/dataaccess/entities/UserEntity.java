@@ -20,6 +20,13 @@ public class UserEntity {
 	private String email;
 	private PlayerStatisticsEntity statistics;
 
+	public UserEntity(long id, String name, String surname, PlayerStatisticsEntity statistics) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.statistics = statistics;
+	}
+
 	public long getId() {
 		return id;
 	}

@@ -1,24 +1,23 @@
 package com.capgemini.chess.dataaccess.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 import com.capgemini.chess.enums.Status;
 
 @Entity
 public class ChallengeEntity {
 
-	@Id
-	@GeneratedValue
 	private long id;
-	@Column(nullable = false)
 	private long challengingPlayerId;
-	@Column(nullable = false)
 	private long opponentPlayerId;
-	@Column(nullable = false)
 	private Status status;
+
+	public ChallengeEntity(long id, long challengingPlayerId, long opponentPlayerId, Status status) {
+		this.id = id;
+		this.challengingPlayerId = challengingPlayerId;
+		this.opponentPlayerId = opponentPlayerId;
+		this.status = status;
+	}
 
 	public long getOpponentPlayerId() {
 		return opponentPlayerId;

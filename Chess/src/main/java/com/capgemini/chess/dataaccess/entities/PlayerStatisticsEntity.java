@@ -9,6 +9,16 @@ public class PlayerStatisticsEntity {
 	private int drawn;
 	private long points;
 	private int level;
+	
+	public PlayerStatisticsEntity(long id, int played, int won, int lost, int drawn, int points, int level) {
+		this.id = id;
+		this.played = played;
+		this.won = won;
+		this.lost = lost;
+		this.drawn = drawn;
+		this.points = points;
+		this.level = level;
+	}
 
 	public long getId() {
 		return id;

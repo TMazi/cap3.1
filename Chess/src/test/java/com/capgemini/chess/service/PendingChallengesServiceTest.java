@@ -12,9 +12,10 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.capgemini.chess.dao.ChallengedPlayersDao;
-import com.capgemini.chess.dao.PotentialOpponentDao;
+import com.capgemini.chess.dao.ChallengeDao;
+import com.capgemini.chess.dao.UserDao;
 import com.capgemini.chess.service.impl.PendingChallengesServiceImpl;
+import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
 
@@ -22,10 +23,10 @@ import com.capgemini.chess.service.to.UserTO;
 public class PendingChallengesServiceTest {
 
 	@Mock
-	ChallengedPlayersDao challengers;
+	ChallengeDao challengers;
 
 	@Mock
-	PotentialOpponentDao potential;
+	UserDao potential;
 
 	@Test
 	public void shouldGetListOfPendindChallenges() {
@@ -35,15 +36,15 @@ public class PendingChallengesServiceTest {
 		user.setId(1L);
 		List<Long> ids = generateIds();
 		List<OpponentTO> pendingOpponents = generatePlayers();
-		when(challengers.getIDsOfPlayersChallenging(user.getId())).thenReturn(ids);
+		when(challengers.getIDsOfPlayersChallengingThisPlayer(user.getId())).thenReturn(ids);
 		when(potential.getOpponentsByIDs(Matchers.anyListOf(Long.class))).thenReturn(pendingOpponents);
 		PendingChallengesService service = new PendingChallengesServiceImpl(challengers, potential);
 
 		// when
-		List<OpponentTO> opponents = service.getPendingChallenges(user);
+		List<ChallengeTO> challenges = service.getPendingChallenges(user.getId());
 		
 		//then
-		assertEquals(3, opponents.size());
+		assertEquals(3, challenges.size());
 
 	}
 

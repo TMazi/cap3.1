@@ -3,10 +3,11 @@ package com.capgemini.chess.service.to;
 import com.capgemini.chess.enums.Status;
 
 public class ChallengeTO {
-	
+
 	private long id;
 	private long challengingPlayerId;
 	private long opponentPlayerId;
+	private StatisticTO challengingPlayerStats;
 	private Status status;
 
 	public long getOpponentPlayerId() {
@@ -15,6 +16,14 @@ public class ChallengeTO {
 
 	public void setOpponentPlayerId(long opponentPlayerId) {
 		this.opponentPlayerId = opponentPlayerId;
+	}
+
+	public StatisticTO getChallengingPlayerStats() {
+		return challengingPlayerStats;
+	}
+
+	public void setChallengingPlayerStats(StatisticTO challengingPlayerStats) {
+		this.challengingPlayerStats = challengingPlayerStats;
 	}
 
 	public long getId() {

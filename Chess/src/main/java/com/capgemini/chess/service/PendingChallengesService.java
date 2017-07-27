@@ -2,11 +2,14 @@ package com.capgemini.chess.service;
 
 import java.util.List;
 
-import com.capgemini.chess.service.to.OpponentTO;
-import com.capgemini.chess.service.to.UserTO;
+import org.springframework.stereotype.Service;
 
+import com.capgemini.chess.service.to.ChallengeTO;
+
+
+@Service
 public interface PendingChallengesService {
 
-	List<OpponentTO> getPendingChallenges(UserTO user);
+	List<ChallengeTO> getPendingChallenges(long userId);
 
 }

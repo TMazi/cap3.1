@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.capgemini.chess.dao.ChallengeDao;
 import com.capgemini.chess.dao.UserDao;
-import com.capgemini.chess.service.impl.PotentialOpponentsServiceImpl;
+import com.capgemini.chess.service.impl.GetPotentialOpponentsServiceImpl;
 import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
@@ -32,7 +32,7 @@ public class PotentialOpponentsServiceTest {
 	public void shouldReturnListOfOpponents() {
 
 		// given
-		PotentialOpponentsService service = new PotentialOpponentsServiceImpl(opponentsDao, challengedDao);
+		GetPotentialOpponentsService service = new GetPotentialOpponentsServiceImpl(opponentsDao, challengedDao);
 		List<OpponentTO> opponents = createSomeOpponents();
 		List<Long> alreadyChallenged = new ArrayList<>();
 		alreadyChallenged.add(2L);

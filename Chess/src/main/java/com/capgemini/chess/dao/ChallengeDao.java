@@ -5,11 +5,13 @@ import java.util.List;
 import com.capgemini.chess.service.to.ChallengeTO;
 
 public interface ChallengeDao {
-	
-	public List<Long> getIDsOfPlayersInChallenge(Long playerID);
-	
-	public List<Long> getIDsOfPlayersChallengingThisPlayer(Long playerID);
-	
-	public ChallengeTO setNewChallenge(ChallengeTO challenge);
+
+	List<Long> getIDsOfPlayersInChallenge(Long playerID);
+
+	List<Long> getIDsOfPlayersChallengingThisPlayer(Long playerID);
+
+	ChallengeTO setChallenge(ChallengeTO challenge);
+
+	ChallengeTO findChallenge(long firstPlayer, long secondPlayer);
 
 }

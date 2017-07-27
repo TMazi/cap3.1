@@ -1,8 +1,9 @@
 package com.capgemini.chess.dao.impl;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ import com.capgemini.chess.service.to.ChallengeTO;
 @Repository
 public class ChallengeDaoImpl implements ChallengeDao {
 
-	List<ChallengeEntity> challenges = new ArrayList<>();
+	Set<ChallengeEntity> challenges = new HashSet<>();
 
 	public ChallengeDaoImpl() {
 		initChallenges();
@@ -34,17 +35,27 @@ public class ChallengeDaoImpl implements ChallengeDao {
 	@Override
 	public List<Long> getIDsOfPlayersChallengingThisPlayer(Long playerID) {
 
-		return challenges.stream().filter(c -> playerID.equals(c.getOpponentPlayerId()))
+		return challenges.stream()
+				.filter(c -> playerID.equals(c.getOpponentPlayerId()))
 				.map(c -> c.getChallengingPlayerId()).collect(Collectors.toList());
 	}
 
 	@Override
-	public ChallengeTO setNewChallenge(ChallengeTO challenge) {
+	public ChallengeTO setChallenge(ChallengeTO challenge) {
 		ChallengeEntity newChallenge = ChallengeMapper.challengeMapper(challenge);
 		newChallenge.setId(getNextId());
 		challenges.add(newChallenge);
 		return ChallengeMapper.challengeMapper(newChallenge);
+	}
 
+	@Override
+	public ChallengeTO findChallenge(long firstPlayer, long secondPlayer) {
+		return challenges.stream()
+				.filter(c -> (c.getChallengingPlayerId() == firstPlayer && c.getOpponentPlayerId() == secondPlayer)
+						|| (c.getOpponentPlayerId() == firstPlayer && c.getChallengingPlayerId() == secondPlayer))
+				.findFirst()
+				.map(c -> ChallengeMapper.challengeMapper(c))
+				.orElse(null);
 	}
 
 	private void initChallenges() {

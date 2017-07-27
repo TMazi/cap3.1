@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.capgemini.chess.dao.ChallengeDao;
 import com.capgemini.chess.dao.UserDao;
-import com.capgemini.chess.service.impl.PendingChallengesServiceImpl;
+import com.capgemini.chess.service.impl.GetPendingChallengesServiceImpl;
 import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
@@ -38,7 +38,7 @@ public class PendingChallengesServiceTest {
 		List<OpponentTO> pendingOpponents = generatePlayers();
 		when(challengers.getIDsOfPlayersChallengingThisPlayer(user.getId())).thenReturn(ids);
 		when(potential.getOpponentsByIDs(Matchers.anyListOf(Long.class))).thenReturn(pendingOpponents);
-		PendingChallengesService service = new PendingChallengesServiceImpl(challengers, potential);
+		GetPendingChallengesService service = new GetPendingChallengesServiceImpl(challengers, potential);
 
 		// when
 		List<ChallengeTO> challenges = service.getPendingChallenges(user.getId());

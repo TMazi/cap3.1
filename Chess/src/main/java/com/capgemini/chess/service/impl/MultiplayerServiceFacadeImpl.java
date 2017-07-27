@@ -8,45 +8,47 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.chess.service.GetPlayerStatisticsService;
 import com.capgemini.chess.service.MultiplayerServiceFacade;
-import com.capgemini.chess.service.PendingChallengesService;
-import com.capgemini.chess.service.PotentialOpponentsService;
-import com.capgemini.chess.service.SendNewChallengeService;
+import com.capgemini.chess.service.GetPendingChallengesService;
+import com.capgemini.chess.service.GetPotentialOpponentsService;
+import com.capgemini.chess.service.CreateNewChallengeService;
 import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.StatisticTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @Service
 public class MultiplayerServiceFacadeImpl implements MultiplayerServiceFacade {
+	
+	//TODO walidacja, czy taki challenge juz istnieje
 
-	private PotentialOpponentsService potentialOpponentsService = null;
-	private PendingChallengesService pendingChallengesService = null;
-	private SendNewChallengeService sendNewChallengeService = null;
+	private GetPotentialOpponentsService getPotentialOpponentsService = null;
+	private GetPendingChallengesService getPendingChallengesService = null;
+	private CreateNewChallengeService createNewChallengeService = null;
 	private GetPlayerStatisticsService statisticsService = null;
 
 	@Autowired
-	MultiplayerServiceFacadeImpl(PotentialOpponentsService potentialOpponentsService,
-			PendingChallengesService pendingChallengesService, SendNewChallengeService sendNewChallengeService,
+	MultiplayerServiceFacadeImpl(GetPotentialOpponentsService getPotentialOpponentsService,
+			GetPendingChallengesService getPendingChallengesService, CreateNewChallengeService createNewChallengeService,
 			GetPlayerStatisticsService statisticsService) {
 
-		this.potentialOpponentsService = potentialOpponentsService;
-		this.pendingChallengesService = pendingChallengesService;
-		this.sendNewChallengeService = sendNewChallengeService;
+		this.getPotentialOpponentsService = getPotentialOpponentsService;
+		this.getPendingChallengesService = getPendingChallengesService;
+		this.createNewChallengeService = createNewChallengeService;
 		this.statisticsService = statisticsService;
 	}
 
 	@Override
-	public List<ChallengeTO> getPotentialChallenges(UserTO user) {
+	public List<ChallengeTO> getPotentialAndPendingChallenges(UserTO user) {
 
 		List<ChallengeTO> result = new ArrayList<>();
-		result.addAll(potentialOpponentsService.getPotentialOpponents(user));
-		result.addAll(pendingChallengesService.getPendingChallenges(user.getId()));
+		result.addAll(getPotentialOpponentsService.getPotentialOpponents(user));
+		result.addAll(getPendingChallengesService.getPendingChallenges(user.getId()));
 		return result;
 
 	}
 
 	@Override
-	public ChallengeTO sendNewChallenge(Long firstID, Long secondID) {
-		return sendNewChallengeService.sendNewChallenge(firstID, secondID);
+	public ChallengeTO sendNewChallengeToPlayer(Long firstID, Long secondID) {
+		return createNewChallengeService.sendNewChallenge(firstID, secondID);
 	}
 
 	@Override

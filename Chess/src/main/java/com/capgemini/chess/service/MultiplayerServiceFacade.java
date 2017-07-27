@@ -11,9 +11,9 @@ import com.capgemini.chess.service.to.UserTO;
 @Service
 public interface MultiplayerServiceFacade {
 
-	List<ChallengeTO> getPotentialChallenges(UserTO user);
+	List<ChallengeTO> getPotentialAndPendingChallenges(UserTO user);
 
-	ChallengeTO sendNewChallenge(Long challenger, Long opponent);
+	ChallengeTO sendNewChallengeToPlayer(Long challenger, Long opponent);
 	
 	StatisticTO getPlayersStatistics(Long playerID);
 

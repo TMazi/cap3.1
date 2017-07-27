@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service;
 import com.capgemini.chess.dao.ChallengeDao;
 import com.capgemini.chess.dao.UserDao;
 import com.capgemini.chess.mapper.ChallengeMapper;
-import com.capgemini.chess.service.PotentialOpponentsService;
+import com.capgemini.chess.service.GetPotentialOpponentsService;
 import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.OpponentTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @Service
-public class PotentialOpponentsServiceImpl implements PotentialOpponentsService {
+public class GetPotentialOpponentsServiceImpl implements GetPotentialOpponentsService {
 
 	UserDao users = null;
 	ChallengeDao challenges = null;
 
 	@Autowired
-	public PotentialOpponentsServiceImpl(UserDao users, ChallengeDao challenges) {
+	public GetPotentialOpponentsServiceImpl(UserDao users, ChallengeDao challenges) {
 		this.users = users;
 		this.challenges = challenges;
 	}

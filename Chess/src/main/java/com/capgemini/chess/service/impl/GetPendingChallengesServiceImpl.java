@@ -10,18 +10,18 @@ import com.capgemini.chess.dao.ChallengeDao;
 import com.capgemini.chess.dao.UserDao;
 import com.capgemini.chess.enums.Status;
 import com.capgemini.chess.mapper.ChallengeMapper;
-import com.capgemini.chess.service.PendingChallengesService;
+import com.capgemini.chess.service.GetPendingChallengesService;
 import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.OpponentTO;
 
 @Service
-public class PendingChallengesServiceImpl implements PendingChallengesService {
+public class GetPendingChallengesServiceImpl implements GetPendingChallengesService {
 
 	ChallengeDao challenges = null;
 	UserDao users = null;
 
 	@Autowired
-	public PendingChallengesServiceImpl(ChallengeDao challengers, UserDao potential) {
+	public GetPendingChallengesServiceImpl(ChallengeDao challengers, UserDao potential) {
 		this.challenges = challengers;
 		this.users = potential;
 	}

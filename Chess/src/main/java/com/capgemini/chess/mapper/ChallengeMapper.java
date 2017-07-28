@@ -19,7 +19,7 @@ public class ChallengeMapper {
 		statistics.setLost(opponent.getStatistic().getLost());
 		statistics.setPoints(opponent.getStatistic().getPoints());
 		statistics.setLevel(opponent.getStatistic().getLevel());
-		challenge.setChallengingPlayerStats(statistics);
+		challenge.setOpponentPlayerStats(statistics);
 
 		return challenge;
 	}

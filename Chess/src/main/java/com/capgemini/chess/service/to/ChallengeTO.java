@@ -6,6 +6,7 @@ public class ChallengeTO {
 	private long challengingPlayerId;
 	private long opponentPlayerId;
 	private StatisticTO challengingPlayerStats;
+	private StatisticTO opponentPlayerStats;
 
 	public long getOpponentPlayerId() {
 		return opponentPlayerId;
@@ -37,6 +38,14 @@ public class ChallengeTO {
 
 	public void setChallengingPlayerId(long challengingPlayerId) {
 		this.challengingPlayerId = challengingPlayerId;
+	}
+
+	public StatisticTO getOpponentPlayerStats() {
+		return opponentPlayerStats;
+	}
+
+	public void setOpponentPlayerStats(StatisticTO opponentPlayerStats) {
+		this.opponentPlayerStats = opponentPlayerStats;
 	}
 
 }

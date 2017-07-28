@@ -45,7 +45,7 @@ public class GetPotentialOpponentsServiceImpl implements GetPotentialOpponentsSe
 				.map(opp -> ChallengeMapper.challengeMapper(opp))
 				.collect(Collectors.toList());
 
-		challenges.stream().forEach(chall -> chall.setOpponentPlayerId(user.getId()));
+		challenges.stream().forEach(chall -> chall.setChallengingPlayerId(user.getId()));
 
 		return challenges;
 

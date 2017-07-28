@@ -26,6 +26,7 @@ public class UserMapper {
 		userTO.setFirstName(user.getName());
 		userTO.setLastName(user.getSurname());
 		userTO.setId(user.getId());
+		userTO.setStatistic(UserMapper.statisticsMapper(user));
 		
 		return userTO;
 		

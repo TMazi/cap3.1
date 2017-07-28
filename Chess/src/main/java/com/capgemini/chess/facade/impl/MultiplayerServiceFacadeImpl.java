@@ -1,4 +1,4 @@
-package com.capgemini.chess.service.impl;
+package com.capgemini.chess.facade.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.chess.service.GetPlayerStatisticsService;
-import com.capgemini.chess.service.MultiplayerServiceFacade;
 import com.capgemini.chess.service.GetPendingChallengesService;
 import com.capgemini.chess.service.GetPotentialOpponentsService;
+import com.capgemini.chess.facade.MultiplayerServiceFacade;
 import com.capgemini.chess.service.CreateNewChallengeService;
 import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.StatisticTO;
@@ -17,18 +17,19 @@ import com.capgemini.chess.service.to.UserTO;
 
 @Service
 public class MultiplayerServiceFacadeImpl implements MultiplayerServiceFacade {
-	
-	//TODO walidacja, czy taki challenge juz istnieje
 
 	private GetPotentialOpponentsService getPotentialOpponentsService = null;
+
 	private GetPendingChallengesService getPendingChallengesService = null;
+
 	private CreateNewChallengeService createNewChallengeService = null;
+
 	private GetPlayerStatisticsService statisticsService = null;
 
 	@Autowired
-	MultiplayerServiceFacadeImpl(GetPotentialOpponentsService getPotentialOpponentsService,
-			GetPendingChallengesService getPendingChallengesService, CreateNewChallengeService createNewChallengeService,
-			GetPlayerStatisticsService statisticsService) {
+	public MultiplayerServiceFacadeImpl(GetPotentialOpponentsService getPotentialOpponentsService,
+			GetPendingChallengesService getPendingChallengesService,
+			CreateNewChallengeService createNewChallengeService, GetPlayerStatisticsService statisticsService) {
 
 		this.getPotentialOpponentsService = getPotentialOpponentsService;
 		this.getPendingChallengesService = getPendingChallengesService;
@@ -54,7 +55,7 @@ public class MultiplayerServiceFacadeImpl implements MultiplayerServiceFacade {
 	@Override
 	public StatisticTO getPlayersStatistics(Long playerID) {
 		return statisticsService.getPlayersStatistics(playerID);
-		
+
 	}
 
 }

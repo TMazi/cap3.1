@@ -1,5 +1,8 @@
 package com.capgemini.chess.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +20,8 @@ public class CreateNewChallengeServiceImpl implements CreateNewChallengeService 
 	ValidateChallengeService validateChallenge = null;
 
 	@Autowired
-	public CreateNewChallengeServiceImpl(ChallengeDao challengeDao, ValidatePlayerService validatePlayer, ValidateChallengeService validateChallenge) {
+	public CreateNewChallengeServiceImpl(ChallengeDao challengeDao, ValidatePlayerService validatePlayer,
+			ValidateChallengeService validateChallenge) {
 		this.validatePlayer = validatePlayer;
 		this.challengeDao = challengeDao;
 		this.validateChallenge = validateChallenge;
@@ -25,8 +29,10 @@ public class CreateNewChallengeServiceImpl implements CreateNewChallengeService 
 
 	@Override
 	public ChallengeTO sendNewChallenge(Long challenger, Long opponent) {
-		validatePlayer.validatePlayer(challenger);
-		validatePlayer.validatePlayer(opponent);
+		List<Long> players = new ArrayList<>();
+		players.add(challenger);
+		players.add(opponent);
+		validatePlayer.validatePlayer(players);
 		validateChallenge.validateChallenge(challenger, opponent);
 		ChallengeTO challenge = new ChallengeTO();
 		challenge.setChallengingPlayerId(challenger);

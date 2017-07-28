@@ -26,13 +26,14 @@ public class ChallengeMapper {
 
 	public static ChallengeTO challengeMapper(ChallengeEntity challEnt) {
 		ChallengeTO challenge = new ChallengeTO();
+		challenge.setId(challEnt.getId());
 		challenge.setChallengingPlayerId(challEnt.getChallengingPlayerId());
 		challenge.setOpponentPlayerId(challEnt.getOpponentPlayerId());
 		return challenge;
 	}
 
 	public static ChallengeEntity challengeMapper(ChallengeTO chall) {
-		ChallengeEntity challenge = new ChallengeEntity(0L, chall.getChallengingPlayerId(), chall.getOpponentPlayerId());
+		ChallengeEntity challenge = new ChallengeEntity(chall.getId(), chall.getChallengingPlayerId(), chall.getOpponentPlayerId());
 
 		return challenge;
 	}

@@ -1,23 +1,21 @@
 package com.capgemini.chess.dataaccess.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class UserEntity {
 
+
 	@Id
-	@GeneratedValue
 	private long id;
-	@Column(nullable = false)
 	private String login;
-	@Column(nullable = false)
 	private String password;
 	private String name;
 	private String surname;
 	private String email;
+	@OneToOne
 	private PlayerStatisticsEntity statistics;
 
 	public UserEntity(long id, String name, String surname, PlayerStatisticsEntity statistics) {

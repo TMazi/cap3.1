@@ -1,7 +1,12 @@
 package com.capgemini.chess.dataaccess.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class PlayerStatisticsEntity {
 
+	@Id
 	private long id;
 	private int played;
 	private int won;

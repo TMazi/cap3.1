@@ -1,10 +1,12 @@
 package com.capgemini.chess.dataaccess.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class ChallengeEntity {
 
+	@Id
 	private long id;
 	private long challengingPlayerId;
 	private long opponentPlayerId;

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.capgemini.chess.dao.UserDao;
 import com.capgemini.chess.data.Users;
 import com.capgemini.chess.mapper.UserMapper;
-import com.capgemini.chess.service.to.StatisticTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @Repository
@@ -19,9 +18,10 @@ public class UserDaoImpl implements UserDao {
 	public List<UserTO> findFivePotentialOpponents(int minLevel, int maxLevel, List<Long> impossiblePlayers) {
 
 		return Users.getUsers().stream()
-				.filter(user -> user.getStatistics().getLevel() > maxLevel
-						&& user.getStatistics().getLevel() < minLevel)
+				.filter(user -> user.getStatistics().getLevel() <= maxLevel
+						&& user.getStatistics().getLevel() >= minLevel)
 				.filter(user -> !impossiblePlayers.contains(user.getId()))
+				.limit(5)
 				.map(user -> UserMapper.userMapper(user))
 				.collect(Collectors.toList());
 	}
@@ -43,17 +43,20 @@ public class UserDaoImpl implements UserDao {
 				.map(user -> UserMapper.userMapper(user))
 				.orElse(null);
 	}
+	
 
 	@Override
-	public StatisticTO getUserStatistic(long playerId) {
-		return Users.getUsers().stream()
-				.filter(p -> p.getId() == playerId).findFirst()
-				.map(p -> UserMapper.statisticsMapper(p))
-				.orElse(null);
+	public List<UserTO> searchForPlayers(List<Long> playersId) {
+		return Users.getUsers()
+				.stream()
+				.filter(p -> playersId.contains(p.getId()))
+				.map(user -> UserMapper.userMapper(user))
+				.collect(Collectors.toList());
 	}
 	
 	private long getNextId() {
 		return Users.getUsers().stream().map(player -> player.getId()).max(Comparator.comparing(l -> l)).orElse(0L) + 1L;
 	}
+
 
 }

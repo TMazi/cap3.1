@@ -51,7 +51,8 @@ public class ChallengeDaoImpl implements ChallengeDao {
 	}
 
 	private long getNextId() {
-		return Challenges.getChallenges().stream().map(chall -> chall.getId()).max(Comparator.comparing(l -> l)).orElse(0L) + 1L;
+	
+		return Challenges.getChallenges().stream().map(chall -> chall.getId()).max(Comparator.naturalOrder()).orElse(0L) +1L;
 	}
 
 }

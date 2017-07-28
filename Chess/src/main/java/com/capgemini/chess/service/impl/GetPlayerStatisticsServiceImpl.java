@@ -3,7 +3,7 @@ package com.capgemini.chess.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.chess.dao.UserDao;
+import com.capgemini.chess.dao.StatisticDao;
 import com.capgemini.chess.service.GetPlayerStatisticsService;
 import com.capgemini.chess.service.ValidatePlayerService;
 import com.capgemini.chess.service.to.StatisticTO;
@@ -12,18 +12,18 @@ import com.capgemini.chess.service.to.StatisticTO;
 public class GetPlayerStatisticsServiceImpl implements GetPlayerStatisticsService {
 
 	ValidatePlayerService validateService = null;
-	UserDao userDao = null;
+	StatisticDao statisticDao = null;
 
 	@Autowired
-	GetPlayerStatisticsServiceImpl(ValidatePlayerService validateService, UserDao userDao) {
+	public GetPlayerStatisticsServiceImpl(ValidatePlayerService validateService, StatisticDao statisticDao) {
 		this.validateService = validateService;
-		this.userDao = userDao;
+		this.statisticDao = statisticDao;
 	}
 
 	@Override
 	public StatisticTO getPlayersStatistics(long playerID) {
 		validateService.validatePlayer(playerID);
-		return userDao.getUserStatistic(playerID);
+		return statisticDao.getUserStatistic(playerID);
 	}
 
 }

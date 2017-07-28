@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.capgemini.chess.service.to.ChallengeTO;
 import com.capgemini.chess.service.to.UserTO;
 
+
 @Service
 public interface GetPotentialOpponentsService {
 	

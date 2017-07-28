@@ -20,7 +20,7 @@ import com.capgemini.chess.service.to.StatisticTO;
 import com.capgemini.chess.service.to.UserTO;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PotentialOpponentsServiceTest {
+public class GetPotentialOpponentsServiceTest {
 
 	@Mock
 	UserDao opponentsDao;
@@ -37,7 +37,8 @@ public class PotentialOpponentsServiceTest {
 		List<Long> alreadyChallenged = new ArrayList<>();
 		alreadyChallenged.add(2L);
 		when(challengedDao.getIDsOfPlayersInChallenge(1L)).thenReturn(alreadyChallenged);
-		when(opponentsDao.findFivePotentialOpponents(Matchers.eq(1), Matchers.eq(4), Matchers.anyListOf(Long.class))).thenReturn(opponents);
+		when(opponentsDao.findFivePotentialOpponents(Matchers.eq(1), Matchers.eq(4), Matchers.anyListOf(Long.class)))
+				.thenReturn(opponents);
 		UserTO user = new UserTO();
 		user.setId(1);
 		user.setStatistic(new StatisticTO());

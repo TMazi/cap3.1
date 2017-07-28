@@ -1,4 +1,4 @@
-package com.capgemini.chess.service;
+package com.capgemini.chess.facade;
 
 import java.util.List;
 
